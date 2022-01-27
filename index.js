@@ -19,7 +19,7 @@ client.on('interactionCreate', async interaction => {
     const {commandName} = interaction;
 
     if (commandName === 'tama') {
-        const name = Math.floor(Math.random() * devices.length);
+        const name = devices[Math.floor(Math.random() * devices.length)];
         await interaction.reply(name);
     }
 });
