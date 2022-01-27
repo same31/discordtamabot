@@ -3,7 +3,6 @@
 STEP=$1
 
 PROJECT=$(echo "${GITHUB_REPOSITORY}" | sed -E 's/^.+\///')
-SERVICES=("${PROJECT}")
 REPOSITORY="mitm-org/${PROJECT}"
 TAG=${GITHUB_SHA::8}
 IMAGE=${REPOSITORY}:${TAG}
