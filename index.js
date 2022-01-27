@@ -1,6 +1,7 @@
 // Require the necessary discord.js classes
 const {Client, Intents} = require('discord.js');
 const {token} = require('./config.js');
+const {devices} = require('./tamas.json');
 
 // Create a new client instance
 const client = new Client({intents: [Intents.FLAGS.GUILDS]});
@@ -17,10 +18,9 @@ client.on('interactionCreate', async interaction => {
 
     const {commandName} = interaction;
 
-    if (commandName === 'ping') {
-        await interaction.reply('Pong!');
-    } else if (commandName === 'tama') {
-        await interaction.reply('todo');
+    if (commandName === 'tama') {
+        const name = Math.floor(Math.random() * devices.length);
+        await interaction.reply(name);
     }
 });
 
