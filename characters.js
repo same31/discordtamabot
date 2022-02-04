@@ -10,13 +10,13 @@ const fragmentCacheByCategory = new Map();
 
 async function getRandomCharacter() {
     const category = charCategories[Math.floor(Math.random() * charCategories.length)];
+    const url = `${tamaCharactersUrl}${category}`;
 
     let groups;
     const cache = fragmentCacheByCategory.get(category);
     if (cache) {
         groups = cache;
     } else {
-        const url = `${tamaCharactersUrl}${category}`;
         const { data } = await axios.get(url);
 
         const div = data.slice(data.indexOf('<div class="category-page__members">'), data.indexOf('<div class="category-page__pagination">'));
