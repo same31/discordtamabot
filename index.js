@@ -2,6 +2,7 @@
 const {Client, Intents} = require('discord.js');
 const {token} = require('./config.js');
 const {devices} = require('./tamas.json');
+const { random } = require('./random');
 const {getRandomCharacter} = require('./characters');
 
 // Create a new client instance
@@ -20,7 +21,7 @@ client.on('interactionCreate', async interaction => {
     const {commandName} = interaction;
 
     if (commandName === 'tama') {
-        const name = devices[Math.floor(Math.random() * devices.length)];
+        const name = devices[Math.floor(random() * devices.length)];
         await interaction.reply(name);
     } else if (commandName === 'char') {
         const {img, name, link} = await getRandomCharacter();

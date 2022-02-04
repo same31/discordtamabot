@@ -1,4 +1,5 @@
 const axios = require('axios');
+const { random } = require('./random');
 const wikiUrl = 'https://tamagotchi.fandom.com/wiki/';
 const tamaCharactersUrl = `${wikiUrl}Category:Tamagotchi_characters?from=`;
 // A - Z
@@ -9,7 +10,7 @@ charCategories.push('¡');
 const fragmentCacheByCategory = new Map();
 
 async function getRandomCharacter() {
-    const category = charCategories[Math.floor(Math.random() * charCategories.length)];
+    const category = charCategories[Math.floor(random() * charCategories.length)];
     const url = `${tamaCharactersUrl}${category}`;
 
     let groups;
@@ -38,7 +39,7 @@ async function getRandomCharacter() {
 }
 
 function getCharacterInfoFromGroupsHtmlFragment(groups) {
-    const source = groups[Math.floor(Math.random() * groups.length)][1] || '';
+    const source = groups[Math.floor(random() * groups.length)][1] || '';
     const matches = source.match(/src="(.+?)".+?alt="(.+?)"/s);
 
     let [, img, name] = matches || [];
@@ -55,7 +56,7 @@ function getCharacterInfoFromGroupsHtmlFragment(groups) {
 }
 
 // Test
-// getRandomCharacter().then(r => console.log(r));
+getRandomCharacter().then(r => console.log(r));
 
 // Clear cache every day
 setInterval(function() {
