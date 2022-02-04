@@ -24,9 +24,14 @@ client.on('interactionCreate', async interaction => {
         const name = devices[Math.floor(random() * devices.length)];
         await interaction.reply(name);
     } else if (commandName === 'char') {
-        const {img, name, link} = await getRandomCharacter();
+        const character = await getRandomCharacter();
 
-        await interaction.reply(`[${name}](<${link}>)\n${img}`);
+        if (!character) {
+            await interaction.reply('Not yet initialised, please wait a few seconds...');
+        } else {
+            const {img, name, link} = character;
+            await interaction.reply(`[${name}](<${link}>)\n${img}`);
+        }
     }
 });
 
