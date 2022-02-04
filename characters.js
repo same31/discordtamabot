@@ -17,11 +17,14 @@ async function getRandomCharacter() {
     if (cache) {
         groups = cache;
     } else {
-        const { data } = await axios.get(url);
-
-        const div = data.slice(data.indexOf('<div class="category-page__members">'), data.indexOf('<div class="category-page__pagination">'));
-
-        groups = [...div.matchAll(/<noscript>(.+?)<\/noscript>/gs)];
+        try {
+            const { data } = await axios.get(url);
+            const div = data.slice(data.indexOf('<div class="category-page__members">'), data.indexOf('<div class="category-page__pagination">'));
+            groups = [...div.matchAll(/<noscript>(.+?)<\/noscript>/gs)];
+        } catch (err) {
+            console.error(err)
+            groups = [];
+        }
     }
 
     if (groups.length > 0) {
