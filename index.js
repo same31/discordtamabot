@@ -25,7 +25,7 @@ client.on('interactionCreate', async interaction => {
     } else if (commandName === 'char') {
         const {img, name, link} = await getRandomCharacter();
 
-        await interaction.reply(`[${name}](${link})`);
+        await interaction.reply(`[${name}](<${link}>)\n${img}`);
     }
 });
 
