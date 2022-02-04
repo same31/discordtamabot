@@ -6,19 +6,31 @@ const charCategories = [...Array(26).keys()].map(i => String.fromCharCode(i + 65
 // ¡ = Other
 charCategories.push('¡');
 
+const fragmentCacheByCategory = new Map();
 
 async function getRandomCharacter() {
     const category = charCategories[Math.floor(Math.random() * charCategories.length)];
-    const url = `${tamaCharactersUrl}${category}`;
-    const { data } = await axios.get(url);
 
-    const div = data.slice(data.indexOf('<div class="category-page__members">'), data.indexOf('<div class="category-page__pagination">'));
+    let groups;
+    const cache = fragmentCacheByCategory.get(category);
+    if (cache) {
+        groups = cache;
+    } else {
+        const url = `${tamaCharactersUrl}${category}`;
+        const { data } = await axios.get(url);
 
-    const groups = [...div.matchAll(/<noscript>(.+?)<\/noscript>/gs)];
+        const div = data.slice(data.indexOf('<div class="category-page__members">'), data.indexOf('<div class="category-page__pagination">'));
+
+        groups = [...div.matchAll(/<noscript>(.+?)<\/noscript>/gs)];
+    }
+
     if (groups.length > 0) {
+        if (!cache) {
+            fragmentCacheByCategory.set(category, groups);
+        }
         return getCharacterInfoFromGroupsHtmlFragment(groups)
     } else {
-        return {img: '', name: 'Errortchi', link: ''};
+        return {img: '', name: 'Errortchi', link: url};
     }
 }
 
@@ -41,6 +53,11 @@ function getCharacterInfoFromGroupsHtmlFragment(groups) {
 
 // Test
 // getRandomCharacter().then(r => console.log(r));
+
+// Clear cache every day
+setInterval(function() {
+    fragmentCacheByCategory.clear();
+}, 24 * 60 * 60 * 1000);
 
 module.exports = {
     getRandomCharacter,
