@@ -1,5 +1,5 @@
 const axios = require('axios');
-const { random } = require('./random');
+const { random } = require('../lib/random');
 const wikiUrl = 'https://tamagotchi.fandom.com/wiki/';
 const tamaCharactersUrl = `${wikiUrl}Category:Tamagotchi_characters?from=`;
 // A - Z

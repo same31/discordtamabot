@@ -1,7 +1,7 @@
 const {SlashCommandBuilder} = require('@discordjs/builders');
 const {REST} = require('@discordjs/rest');
 const {Routes} = require('discord-api-types/v9');
-const {clientId, guildId, token} = require('./config.js');
+const {clientId, guildId, token} = require('./src/config.js');
 
 const commands = [
     new SlashCommandBuilder().setName('tama').setDescription('Replies with a random Tamagotchi device name'),

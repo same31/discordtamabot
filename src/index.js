@@ -1,9 +1,8 @@
 // Require the necessary discord.js classes
 const {Client, Intents} = require('discord.js');
 const {token} = require('./config.js');
-const {devices} = require('./tamas.json');
-const { random } = require('./random');
-const {getRandomCharacter} = require('./characters');
+const {getRandomCharacter} = require('./cmd/characters');
+const {getRandomTama} = require("./cmd/tamas");
 
 // Create a new client instance
 const client = new Client({intents: [Intents.FLAGS.GUILDS]});
@@ -21,8 +20,8 @@ client.on('interactionCreate', async interaction => {
     const {commandName} = interaction;
 
     if (commandName === 'tama') {
-        const name = devices[Math.floor(random() * devices.length)];
-        await interaction.reply(name);
+        const tama = getRandomTama();
+        await interaction.reply(tama);
     } else if (commandName === 'char') {
         const character = await getRandomCharacter();
 
